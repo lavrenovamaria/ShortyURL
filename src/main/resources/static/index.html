@@ -1,0 +1,113 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>URL Shortener</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>URL Shortener</h1>-->
+<!--<form id="shorten-form" method="post">-->
+<!--    <label for="longUrl">Enter the long URL:</label>-->
+<!--    <input type="url" id="longUrl" name="longUrl" required>-->
+<!--    <button type="submit">Shorten URL</button>-->
+<!--</form>-->
+<!--<div id="result"></div>-->
+<!--<script src="/app.js"></script>-->
+
+<!--<script>-->
+<!--    document.getElementById('shorten-form').addEventListener('submit', async (event) => {-->
+<!--        event.preventDefault();-->
+<!--        const longUrl = document.getElementById('longUrl').value;-->
+<!--        const response = await fetch('/shorten', {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json'-->
+<!--            },-->
+<!--            body: JSON.stringify({ longUrl })-->
+<!--        });-->
+
+<!--        if (response.ok) {-->
+<!--            const { shortCode } = await response.json();-->
+<!--            const result = document.getElementById('result');-->
+<!--            result.innerHTML = `Short URL: <a href="/${shortCode}">/${shortCode}</a>`;-->
+<!--        } else {-->
+<!--            const error = await response.text();-->
+<!--            alert('Error: Unable to shorten the URL. Details: ' + error);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+        }
+        .form-control {
+            font-size: 24px;
+            height: 60px;
+        }
+        .btn {
+            font-size: 24px;
+            height: 60px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mb-4">URL Shortener</h1>
+    <form id="shorten-form" method="post">
+        <div class="form-group">
+            <label for="longUrl">Enter the long URL:</label>
+            <input type="url" class="form-control" id="longUrl" name="longUrl" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Shorten URL</button>
+    </form>
+    <div id="result" class="mt-4"></div>
+</div>
+
+<script>
+    document.getElementById('shorten-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const longUrl = document.getElementById('longUrl').value;
+        const response = await fetch('/shorten', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ longUrl })
+        });
+
+        if (response.ok) {
+            const { shortCode } = await response.json();
+            const result = document.getElementById('result');
+            result.innerHTML = `Short URL: <a href="/${shortCode}">/${shortCode}</a>`;
+        } else {
+            const error = await response.text();
+            alert('Error: Unable to shorten the URL. Details: ' + error);
+        }
+    });
+</script>
+<script src="/app.js"></script>
+</body>
+</html>
